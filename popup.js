@@ -1,7 +1,7 @@
 const tabs = await chrome.tabs.query({
   url: [
-    "https://developer.chrome.com/docs/webstore/*",
-    "https://developer.chrome.com/docs/extensions/*",
+    'https://developer.chrome.com/docs/webstore/*',
+    'https://developer.chrome.com/docs/extensions/*',
   ]
 })
 
@@ -13,7 +13,7 @@ const elements = new Set()
 tabs.sort((a, b) => collator.compare(a.title, b.title))
 
 for (const tab of tabs) {
-  const element = template.textContent.firstElementChild.cloneNode(true)
+  const element = template.content.firstElementChild.cloneNode(true)
   const title = tab.title.split('-')[0].trim()
   const pathname = new URL(tab.url).pathname.slice('/docs'.length)
 
