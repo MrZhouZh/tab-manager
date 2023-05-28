@@ -6,10 +6,11 @@ const tabs = await chrome.tabs.query({
 })
 
 const collator = new Intl.Collator()
-tabs.sort((a, b) => collator.compare(a.title, b.title))
-
 const template= document.querySelector('#li_template')
+const button = document.querySelector('button')
 const elements = new Set()
+
+tabs.sort((a, b) => collator.compare(a.title, b.title))
 
 for (const tab of tabs) {
   const element = template.textContent.firstElementChild.cloneNode(true)
@@ -27,3 +28,9 @@ for (const tab of tabs) {
 }
 
 document.querySelector('ul').append(...elements)
+
+button.addEventListener('click', async () => {
+  const tabIds = tabs.map(({ id }) => id)
+  const group = await chrome.tabs.group({ tabIds })
+  await chrome.tabGroups.update(group, { title: 'DOCS' })
+})
